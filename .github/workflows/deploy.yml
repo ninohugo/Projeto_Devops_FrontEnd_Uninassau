@@ -31,14 +31,14 @@ jobs:
       #   with:
       #     context: .
       #     push: true
-      #     tags: ${{ secrets.DOCKER_USERNAME }}/front-end-clients:${{ github.sha }}
+      #     tags: ${{ secrets.DOCKER_USERNAME }}/frontclients:${{ github.sha }}
 
       - name: Build Docker image
-        run: docker build -t front-end-clients:latest .
+        run: docker build -t frontclients:latest .
       - name: Tag Docker image
-        run: docker tag front-end-clients:latest ${{ secrets.DOCKER_USERNAME }}/front-end-clients:latest
+        run: docker tag frontclients:latest ${{ secrets.DOCKER_USERNAME }}/frontclients:latest
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/front-end-clients:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/frontclients:latest
 
       - name: Deploy to EC2 instance
         uses: appleboy/ssh-action@master
@@ -47,9 +47,9 @@ jobs:
           username: "ec2-user"
           key: ${{secrets.EC2_SSH_KEY}}
           script: |
-            docker stop front-end-clients || true
-            docker rm front-end-clients || true
-            docker pull ${{ secrets.DOCKER_USERNAME }}/front-end-clients:latest
-            docker run --restart=always -d --name front-end-clients -p 80:3000 ${{ secrets.DOCKER_USERNAME }}/front-end-clients:latest
-            docker cp apiClients/frontEnd/.env front-end-clients:/app
+            docker stop frontclients || true
+            docker rm frontclients || true
+            docker pull ${{ secrets.DOCKER_USERNAME }}/frontclients:latest
+            docker run --restart=always -d --name frontclients -p 80:3000 ${{ secrets.DOCKER_USERNAME }}/frontclients:latest
+            docker cp apiClients/frontEnd/.env frontclients:/app
 
