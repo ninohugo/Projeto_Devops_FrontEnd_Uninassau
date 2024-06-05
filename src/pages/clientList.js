@@ -35,7 +35,7 @@ function ClientList() {
     return (
         // <Container style={{ width: 800, height: 'auto' }}>
         <Container style={{ height: 'auto' }}>
-            <h1 style={{ margin: 50 }}>Lista de Clientes.</h1>
+            <h1 style={{ margin: 50 }}>Lista de Clientes</h1>
             <ListGroup>
                 <Row>
                     <Col>Id</Col>
